@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern UI Components</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #4cc9f0;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4caf50;
+      --danger: #f44336;
+      --warning: #ff9800;
+      --info: #2196f3;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .main-content {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #eee;
+    }
+
+    h3 {
+      color: var(--secondary);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--secondary);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-success {
+      background-color: var(--success);
+      color: white;
+    }
+
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    .btn-warning {
+      background-color: var(--warning);
+      color: white;
+    }
+
+    .btn-info {
+      background-color: var(--info);
+      color: white;
+    }
+
+    /* Message Windows */
+    .message-window {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .message-header {
+      background-color: var(--primary);
+      color: white;
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: move;
+    }
+
+    .message-header h4 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .window-controls {
+      display: flex;
+    }
+
+    .window-control {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-left: 6px;
+      cursor: pointer;
+    }
+
+    .control-close {
+      background-color: var(--danger);
+    }
+
+    .control-minimize {
+      background-color: var(--warning);
+    }
+
+    .control-maximize {
+      background-color: var(--success);
+    }
+
+    .message-body {
+      padding: 1rem;
+    }
+
+    .message-footer {
+      padding: 0.75rem 1rem;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background-color: white;
+      width: 500px;
+      max-width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      padding: 1rem;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Resource section */
+    .resources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .resource-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      flex: 1 1 250px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .resource-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    /* Unicode showcase */
+    .unicode-showcase {
+      background-color: var(--light);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    .unicode-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .unicode-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: white;
+      padding: 0.75rem;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .unicode-char {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .unicode-code {
+      font-size: 0.7rem;
+      color: #666;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: var(--dark);
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .main-content {
+        padding: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Modern UI Components</h1>
+    <p>A showcase of interactive UI elements with a clean, modern design</p>
+  </header>
+
+  <div class="container">
+    <div class="main-content">
+      <h2>Welcome to our UI Components Showcase</h2>
+      <p>This interactive demo showcases various UI components and patterns commonly used in modern applications. Try out the examples below to see how they work.</p>
+      
+      <div class="button-showcase">
+        <h3>Interactive Controls</h3>
+        <p>Use these buttons to interact with the UI elements throughout this page:</p>
+        
+        <button class="btn btn-primary" id="openMessageBtn">Show Message Window</button>
+        <button class="btn btn-info" id="showUnicodeBtn">Unicode Showcase</button>
+        <button class="btn btn-outline" id="showResourcesBtn">Application Resources</button>
+        <button class="btn btn-warning" id="openModalBtn">Open Modal Dialog</button>
+      </div>
+
+      <!-- Message Window (initially hidden) -->
+      <div class="message-window" id="messageWindow" style="display: none;">
+        <div class="message-header" id="messageHeader">
+          <h4>Message Window <span class="unicode-symbol">✉️</span></h4>
+          <div class="window-controls">
+            <div class="window-control control-minimize"></div>
+            <div class="window-control control-maximize"></div>
+            <div class="window-control control-close" id="closeMessageBtn"></div>
+          </div>
+        </div>
+        <div class="message-body">
+          <p>This is a draggable message window. Click and hold on the header to <strong>move this window</strong> around the page.</p>
+          <p>Message windows like this are commonly used for notifications, alerts, and user communications in applications.</p>
+          <p><strong>Unicode Support:</strong> ✓ Success ⚠️ Warning ⛔ Error 🔍 Search</p>
+        </div>
+        <div class="message-footer">
+          <button class="btn btn-outline" id="dismissBtn">Dismiss</button>
+          <button class="btn btn-primary" id="confirmBtn">Confirm</button>
+        </div>
+      </div>
+
+      <!-- Application Resources Section (initially hidden) -->
+      <div id="resourcesSection" style="display: none;">
+        <h3>Application Resources</h3>
+        <p>Modern applications utilize various resources to enhance functionality and user experience:</p>
+        
+        <div class="resources">
+          <div class="resource-card">
+            <div class="resource-icon">🖼️</div>
+            <h4>Image Assets</h4>
+            <p>Optimize visual elements for different screen sizes and resolutions.</p>
+            <button class="btn btn-outline">Manage Assets</button>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-icon">🔤</div>
+            <h4>Typography</h4>
+            <p>Font families and styles with proper Unicode support for global applications.</p>
+            <button class="btn btn-outline">Font Settings</button>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-icon">🎨</div>
+            <h4>Theme Resources</h4>
+            <p>Color schemes and styling that maintain consistency across the application.</p>
+            <button class="btn btn-outline">Theme Options</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unicode Showcase (initially hidden) -->
+      <div class="unicode-showcase" id="unicodeSection" style="display: none;">
+        <h3>Unicode Support</h3>
+        <p>Modern applications need robust Unicode support to handle characters from different languages and symbol sets:</p>
+        
+        <div class="unicode-grid">
+          <div class="unicode-item">
+            <div class="unicode-char">👋</div>
+            <div class="unicode-code">U+1F44B</div>
+          </div>
+          <div class="unicode-item">
+            <div class="unicode-char">🚀</div>
+            <div class="unicode-code">U+1F680</div>
+          </div>
+          <div class="unicode-item">
+            <div class="unicode-char">⚙️</div>
+            <div class="unicode-code">U+2699</div>
+          </div>
+          <div class="unicode-item">
+            <div class="unicode-char">⚠️</div>
+            <div class="unicode-code">U+26A0</div>
+          </div>
+          <div class="unicode-item">
+            <div class="unicode-char">✓</div>
+            <div class="unicode-code">U+2713</div>
+          </div>
+          <div class="unicode-item">
+            <div class="unicode-char">☰</div>
+            <div class="unicode-code">U+2630</div>
+          </div>
+          <div class="unicode-item">
+            <div class="unicode-char">♥</div>
+            <div class="unicode-code">U+2665</div>
+          </div>
+          <div class="unicode-item">
+            <div class="unicode-char">★</div>
+            <div class="unicode-code">U+2605</div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 1rem;">
+          <p>Unicode enables applications to display characters from various languages:</p>
+          <p>English: Hello World</p>
+          <p>Spanish: Hola Mundo</p>
+          <p>French: Bonjour le Monde</p>
+          <p>Japanese: こんにちは世界</p>
+          <p>Russian: Привет, мир</p>
+          <p>Arabic: مرحبا بالعالم</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Dialog (hidden by default) -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Modal Dialog</h3>
+        <button class="modal-close" id="closeModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>This is a modal dialog box that requires user attention. Modal dialogs are used when:</p>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+          <li>Important information needs to be confirmed</li>
+          <li>User input is required before proceeding</li>
+          <li>Critical warnings need to be acknowledged</li>
+        </ul>
+        <p>Modal dialogs create focus by preventing interaction with the main application until the dialog is addressed.</p>
+        
+        <div style="margin-top: 1rem;">
+          <label for="modalInput">Sample input field:</label>
+          <input type="text" id="modalInput" style="width: 100%; padding: 0.5rem; margin-top: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="cancelModalBtn">Cancel</button>
+        <button class="btn btn-primary" id="confirmModalBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Modern UI Components Demo © 2025</p>
+  </footer>
+
+  <script>
+    // Show/Hide Message Window
+    document.getElementById('openMessageBtn').addEventListener('click', function() {
+      document.getElementById('messageWindow').style.display = 'block';
+    });
+    
+    document.getElementById('closeMessageBtn').addEventListener('click', function() {
+      document.getElementById('messageWindow').style.display = 'none';
+    });
+    
+    document.getElementById('dismissBtn').addEventListener('click', function() {
+      document.getElementById('messageWindow').style.display = 'none';
+    });
+    
+    // Make the message window draggable
+    (function() {
+      const messageWindow = document.getElementById('messageWindow');
+      const messageHeader = document.getElementById('messageHeader');
+      let isDragging = false;
+      let offsetX, offsetY;
+      
+      messageHeader.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        offsetX = e.clientX - messageWindow.getBoundingClientRect().left;
+        offsetY = e.clientY - messageWindow.getBoundingClientRect().top;
+        
+        messageWindow.style.position = 'absolute';
+        messageWindow.style.zIndex = 1000;
+      });
+      
+      document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        
+        messageWindow.style.left = (e.clientX - offsetX) + 'px';
+        messageWindow.style.top = (e.clientY - offsetY) + 'px';
+      });
+      
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+      });
+    })();
+    
+    // Show/Hide Unicode Section
+    document.getElementById('showUnicodeBtn').addEventListener('click', function() {
+      const unicodeSection = document.getElementById('unicodeSection');
+      unicodeSection.style.display = unicodeSection.style.display === 'none' ? 'block' : 'none';
+    });
+    
+    // Show/Hide Resources Section
+    document.getElementById('showResourcesBtn').addEventListener('click', function() {
+      const resourcesSection = document.getElementById('resourcesSection');
+      resourcesSection.style.display = resourcesSection.style.display === 'none' ? 'block' : 'none';
+    });
+    
+    // Modal Dialog Controls
+    document.getElementById('openModalBtn').addEventListener('click', function() {
+      document.getElementById('modalOverlay').style.display = 'flex';
+    });
+    
+    document.getElementById('closeModalBtn').addEventListener('click', function() {
+      document.getElementById('modalOverlay').style.display = 'none';
+    });
+    
+    document.getElementById('cancelModalBtn').addEventListener('click', function() {
+      document.getElementById('modalOverlay').style.display = 'none';
+    });
+    
+    document.getElementById('confirmModalBtn').addEventListener('click', function() {
+      alert('Action confirmed!');
+      document.getElementById('modalOverlay').style.display = 'none';
+    });
+    
+    // Confirm button for message window
+    document.getElementById('confirmBtn').addEventListener('click', function() {
+      alert('Message confirmed!');
+      document.getElementById('messageWindow').style.display = 'none';
+    });
+  </script>
+</body>
+</html>

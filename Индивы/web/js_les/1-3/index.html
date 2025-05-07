@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"> <!-- Кодировка Юникод -->
+  <title>Три темы JS</title>
+  <style>
+    /* Ресурсы: используем стиль, подключаем картинку как фон */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      background-image: url('https://images.wallpaperscraft.ru/image/single/fioletovyj_temnyj_fon_piatna_65626_1920x1080.jpg');
+      background-repeat: no-repeat;
+      background-position: top right;
+      padding: 20px;
+    }
+    h1 {
+      color: rgb(242, 242, 242);
+    }
+    .box {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Пример по темам: Юникод, окна сообщений и ресурсы</h1>
+
+  <div class="box">
+    <h2>1. Юникод в действии</h2>
+    <p>Пример текста с Юникод символами:</p>
+    <p id="unicodeExample"></p>
+  </div>
+
+  <div class="box">
+    <h2>2. Окна сообщений</h2>
+    <button onclick="showAlert()">Показать Alert</button>
+    <button onclick="showConfirm()">Показать Confirm</button>
+    <button onclick="showPrompt()">Показать Prompt</button>
+    <p id="result"></p>
+  </div>
+
+  <div class="box">
+    <h2>3. Ресурсы</h2>
+    <p>В этом примере мы используем:</p>
+    <ul>
+      <li>🌐 Внешнюю картинку в фоне</li>
+      <li>🎨 Стили CSS</li>
+      <li>🧠 Скрипт JavaScript</li>
+    </ul>
+  </div>
+
+  <script>
+    // --- 1. ЮНИКОД ---
+    // Символы можно вставлять напрямую или через \uXXXX
+    const heart = '\u2764'; // ❤️
+    const smile = '\u263A'; // ☺
+    const snowflake = '\u2744'; // ❄
+
+    document.getElementById('unicodeExample').textContent =
+      `Вот символы Юникода: ${heart} ${smile} ${snowflake}`;
+
+
+    // --- 2. ОКНА СООБЩЕНИЙ ---
+    function showAlert() {
+      alert("Привет! Это простое окно сообщения (alert).");
+    }
+
+    function showConfirm() {
+      const userAgrees = confirm("Ты согласен с условиями?");
+      document.getElementById("result").textContent = userAgrees
+        ? "Пользователь согласен ✅"
+        : "Пользователь отказался ❌";
+    }
+
+    function showPrompt() {
+      const name = prompt("Как тебя зовут?");
+      if (name) {
+        document.getElementById("result").textContent = `Привет, ${name}! 👋`;
+      } else {
+        document.getElementById("result").textContent = "Ты ничего не ввел 😢";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -161,6 +161,8 @@ private:
     string model;
     
     Processor processor; // Композиция: процессор является частью ноутбука
+    
+    
     Battery* battery;    // Агрегация: батарея может быть общей
 
 public:
@@ -257,6 +259,7 @@ public:
     {
         totalCars++; // Увеличиваем общее количество машин при создании
     }
+
 };
 
 int Car::totalCars = 0; // Обязательно инициализируем статическое поле вне класса
@@ -301,7 +304,7 @@ int main()
 
     Car car2;
     Car::totalCars++;
-    Car::showTotalCars(); // "Total cars: 1"
+    Car::showTotalCars(); // "Total cars: 2"
 
     return 0;
 }

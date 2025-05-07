@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    :root {
+        --primary-color: #4CAF50;
+        --primary-dark: #388E3C;
+        --primary-light: #C8E6C9;
+        --accent-color: #FF9800;
+        --text-color: #333333;
+        --text-light: #666666;
+        --background-light: #F5F5F5;
+        --white: #FFFFFF;
+        --gray-light: #EEEEEE;
+        --gray: #DDDDDD;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+        font-family: 'Raleway', sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-light);
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    section {
+        padding: 80px 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 15px;
+        line-height: 1.2;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--primary-color);
+        transition: all 0.3s ease;
+    }
+
+    a:hover {
+        color: var(--primary-dark);
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        border-radius: 4px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        color: var(--white);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--primary-dark);
+        color: var(--white);
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--primary-light);
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .section-header h2 {
+        font-size: 2.5rem;
+        color: var(--text-color);
+    }
+
+    .section-header p {
+        color: var(--text-light);
+        font-size: 1.1rem;
+    }
+
+    .image-placeholder {
+        background-color: var(--gray);
+        border-radius: 8px;
+        width: 100%;
+        height: 100%;
+        min-height: 300px;
+    }
+
+    .icon-placeholder {
+        background-color: var(--primary-light);
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+    }
+
+    .avatar-placeholder {
+        background-color: var(--gray);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+    }
+
+    .header {
+        background-color: var(--white);
+        box-shadow: var(--shadow);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 5000;
+    }
+
+    .navbar 
+    {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+    }
+
+    .logo h1 
+    {
+        font-size: 1.8rem;
+        color: var(--primary-color);
+        margin: 0;
+    }
+
+    .nav-menu 
+    {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-menu li {
+        padding: 0 15px;
+    }
+
+    .nav-menu a {
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+        color: var(--primary-color);
+    }
+
+    .btn-nav {
+        background-color: var(--primary-color);
+        color: var(--white) !important;
+        padding: 8px 20px;
+        border-radius: 4px;
+    }
+
+    .btn-nav:hover {
+        background-color: var(--primary-dark);
+    }
+    .hero 
+    {
+        padding-top: 150px;
+        padding-bottom: 80px;
+        background-color: var(--white);
+    }
+
+    .hero .container 
+    {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+    }
+
+    .hero-content { flex: 1; }
+
+    .hero-content h1 
+    {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+        color: var(--text-color);
+    }
+
+    .hero-content p 
+    {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        margin-bottom: 30px;
+    }
+
+    .hero-buttons 
+    {
+        display: flex;
+        gap: 15px;
+    }
+
+    .hero-image { flex: 1; }
+
+
+
+
+
+    .features { background-color: var(--background-light); }
+
+    .features-container 
+    {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+    }
+
+    .feature-card 
+    {
+        background-color: var(--white);
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        flex: 1;
+        min-width: 300px;
+        text-align: center;
+    }
+
+    .feature-card h3 
+    {
+        font-size: 1.5rem;
+        margin: 20px 0;
+    }
+
+    .feature-card p { color: var(--text-light); }
+    .about {background-color: var(--white); }
+
+    .about-content 
+    {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .about-text { flex: 1; }
+
+    .about-text h2 
+    {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .about-text p 
+    {
+        margin-bottom: 20px;
+        color: var(--text-light);
+    }
+
+    .about-image { flex: 1; }
+    </style>
+</head>
+
+<body>
+   <header class="header">
+       <div class="container">
+           <nav class="navbar">
+
+               <div class="logo">
+                   <h1>EcoTech</h1>
+               </div>
+
+               <ul class="nav-menu">
+                   <li><a href="#home" class="active">Home</a></li>
+                   <li><a href="#features">Features</a></li>
+                   <li><a href="#about">About</a></li>
+                   <li><a href="#testimonials">Testimonials</a></li>
+                   <li><a href="#contact" class="btn-nav">Contact Us</a></li>
+               </ul>
+
+               <div class="hamburger">
+                   <span class="bar"></span>
+                   <span class="bar"></span>
+                   <span class="bar"></span>
+               </div>
+
+           </nav>
+       </div>
+   </header>
+
+   <section id="home" class="hero">
+       <div class="container">
+           <div class="hero-content">
+               <h1>Sustainable Technology for a Better Future</h1>
+               <p>EcoTech Solutions provides innovative, eco-friendly technology that helps businesses reduce their carbon footprint while improving efficiency.</p>
+               <div class="hero-buttons">
+                   <a href="#contact" class="btn btn-primary">Get Started</a>
+                   <a href="#features" class="btn btn-secondary">Learn More</a>
+               </div>
+           </div>
+
+           <div class="hero-image">
+                <img class="image-placeholder" src="https://i.vimeocdn.com/video/1958635347-8f3d939cac2a9f4bc6802f80e48913b008ccb00927126e67f5eefbe396b33aa4-d_640x360?r=pad">
+           </div>
+
+       </div>
+   </section>
+
+   <section id="features" class="features">
+
+       <div class="container">
+           <div class="section-header">
+               <h2>Our Features</h2>
+               <p>Discover how our solutions can transform your business</p>
+           </div>
+
+           <div class="features-container">
+
+               <div class="feature-card">
+                   <div class="feature-icon">
+                       <div class="icon-placeholder"></div>
+                   </div>
+                   <h3>Energy Efficiency</h3>
+                   <p>Our smart systems optimize energy consumption, reducing costs and environmental impact.</p>
+               </div>
+
+               <div class="feature-card">
+                   <div class="feature-icon">
+                       <div class="icon-placeholder"></div>
+                   </div>
+                   <h3>Sustainable Materials</h3>
+                   <p>All our products are made from recycled or biodegradable materials.</p>
+               </div>
+
+               <div class="feature-card">
+                   <div class="feature-icon">
+                       <div class="icon-placeholder"></div>
+                   </div>
+                   <h3>Smart Analytics</h3>
+                   <p>Advanced data analytics to help you track and improve your sustainability metrics.</p>
+               </div>
+           </div>
+       </div>
+   </section>
+   
+    <section id="about" class="about">
+    <div class="container">
+
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About EcoTech Solutions</h2>
+                <p>Founded in 2018, EcoTech Solutions has been at the forefront of sustainable technology innovation. Our mission is to help businesses transition to environmentally friendly practices without sacrificing efficiency or profitability.</p>
+                <p>Our team of experts combines deep technological expertise with a passion for environmental sustainability. We believe that technology should be a force for positive change in the world.</p>
+                <a href="#contact" class="btn btn-primary">Join Our Mission</a>
+            </div>
+            <div class="about-image">
+                 <img class="image-placeholder" src="https://i.vimeocdn.com/video/1972037978-a9aa9d460d1cb5108d974088af1027e9793f05742e120c46601007414819b8cd-d_640x360?r=pad">
+            </div>
+        </div>
+
+    </div>
+    </section>
+</body>
+
+</html>

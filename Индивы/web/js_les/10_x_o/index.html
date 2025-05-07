@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #ff006e;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --board-color: #ffffff;
+            --hover-color: #e9ecef;
+            --x-color: #ff006e;
+            --o-color: #3a86ff;
+            --win-color: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .game-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .game-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .status {
+            font-size: 18px;
+            height: 28px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .status.x-turn {
+            color: var(--x-color);
+        }
+
+        .status.o-turn {
+            color: var(--o-color);
+        }
+
+        .status.winner {
+            color: var(--win-color);
+            font-weight: bold;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 8px;
+            padding: 20px;
+            background-color: var(--board-color);
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            background-color: #f1f3f5;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cell:hover:not(.x):not(.o) {
+            background-color: var(--hover-color);
+        }
+
+        .cell.x {
+            color: var(--x-color);
+        }
+
+        .cell.o {
+            color: var(--o-color);
+        }
+
+        .cell.winner {
+            background-color: rgba(76, 175, 80, 0.2);
+        }
+
+        .game-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2672e6;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e60063;
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .score-value.x {
+            color: var(--x-color);
+        }
+
+        .score-value.o {
+            color: var(--o-color);
+        }
+
+        .score-value.tie {
+            color: var(--dark-color);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            max-width: 90%;
+            width: 300px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .modal-message {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #6c757d;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 400px) {
+            .game-container {
+                max-width: 350px;
+            }
+
+            .cell {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>Tic-Tac-Toe</h1>
+            <div class="status x-turn">Player X's turn</div>
+        </div>
+        
+        <div class="board" id="game-board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+        
+        <div class="score-container">
+            <div class="score-item">
+                <div class="score-label">Player X</div>
+                <div class="score-value x" id="x-score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Ties</div>
+                <div class="score-value tie" id="tie-score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Player O</div>
+                <div class="score-value o" id="o-score">0</div>
+            </div>
+        </div>
+        
+        <div class="game-footer">
+            <button class="btn btn-secondary" id="reset-btn">Reset Game</button>
+            <button class="btn btn-primary" id="new-game-btn">New Game</button>
+        </div>
+    </div>
+    
+    <div class="modal" id="win-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Game Over</h2>
+            <p class="modal-message" id="modal-message">Player X wins!</p>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        const gameState = {
+            currentPlayer: 'X',
+            board: Array(9).fill(''),
+            gameOver: false,
+            winningCombo: null,
+            scores: {
+                X: 0,
+                O: 0,
+                tie: 0
+            }
+        };
+
+        // Winning combinations
+        const winningCombinations = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+            [0, 4, 8], [2, 4, 6]             // Diagonals
+        ];
+
+        // DOM Elements
+        const cells = document.querySelectorAll('.cell');
+        const statusElement = document.querySelector('.status');
+        const resetButton = document.getElementById('reset-btn');
+        const newGameButton = document.getElementById('new-game-btn');
+        const xScoreElement = document.getElementById('x-score');
+        const oScoreElement = document.getElementById('o-score');
+        const tieScoreElement = document.getElementById('tie-score');
+        const modal = document.getElementById('win-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const playAgainButton = document.getElementById('play-again-btn');
+
+        // Initialize the game
+        function initGame() {
+            // Add event listeners to cells
+            cells.forEach(cell => {
+                cell.addEventListener('click', () => handleCellClick(cell));
+            });
+
+            // Add event listeners to buttons
+            resetButton.addEventListener('click', resetGame);
+            newGameButton.addEventListener('click', resetScores);
+            playAgainButton.addEventListener('click', closeModalAndReset);
+
+            // Set initial status
+            updateStatus();
+        }
+
+        // Handle cell click
+        function handleCellClick(cell) {
+            const index = cell.dataset.index;
+
+            // Check if the cell is already taken or the game is over
+            if (gameState.board[index] !== '' || gameState.gameOver) {
+                return;
+            }
+
+            // Update the game state
+            gameState.board[index] = gameState.currentPlayer;
+            cell.textContent = gameState.currentPlayer;
+            cell.classList.add(gameState.currentPlayer === 'X' ? 'x' : 'o');
+
+            // Check for a win or a tie
+            checkGameStatus();
+
+            // Switch player if the game isn't over
+            if (!gameState.gameOver) {
+                gameState.currentPlayer = gameState.currentPlayer === 'X' ? 'O' : 'X';
+                updateStatus();
+            }
+        }
+
+        // Check if the game is won or tied
+        function checkGameStatus() {
+            // Check for a win
+            for (const combo of winningCombinations) {
+                const [a, b, c] = combo;
+                if (gameState.board[a] && 
+                    gameState.board[a] === gameState.board[b] && 
+                    gameState.board[a] === gameState.board[c]) {
+                    
+                    gameState.gameOver = true;
+                    gameState.winningCombo = combo;
+                    
+                    // Highlight winning cells
+                    combo.forEach(index => {
+                        cells[index].classList.add('winner');
+                    });
+                    
+                    // Update score
+                    gameState.scores[gameState.currentPlayer]++;
+                    updateScores();
+                    
+                    // Update status and show modal
+                    statusElement.textContent = `Player ${gameState.currentPlayer} wins!`;
+                    statusElement.className = 'status winner';
+                    
+                    modalMessage.textContent = `Player ${gameState.currentPlayer} wins!`;
+                    showModal();
+                    
+                    return;
+                }
+            }
+
+            // Check for a tie
+            if (!gameState.board.includes('')) {
+                gameState.gameOver = true;
+                gameState.scores.tie++;
+                updateScores();
+                
+                statusElement.textContent = "It's a tie!";
+                statusElement.className = 'status';
+                
+                modalMessage.textContent = "It's a tie!";
+                showModal();
+            }
+        }
+
+        // Update the game status message
+        function updateStatus() {
+            if (!gameState.gameOver) {
+                statusElement.textContent = `Player ${gameState.currentPlayer}'s turn`;
+                statusElement.className = `status ${gameState.currentPlayer === 'X' ? 'x-turn' : 'o-turn'}`;
+            }
+        }
+
+        // Update the score display
+        function updateScores() {
+            xScoreElement.textContent = gameState.scores.X;
+            oScoreElement.textContent = gameState.scores.O;
+            tieScoreElement.textContent = gameState.scores.tie;
+        }
+
+        // Reset the game (keep scores)
+        function resetGame() {
+            // Reset game state
+            gameState.currentPlayer = 'X';
+            gameState.board = Array(9).fill('');
+            gameState.gameOver = false;
+            gameState.winningCombo = null;
+
+            // Reset board UI
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.className = 'cell';
+            });
+
+            // Reset status
+            updateStatus();
+        }
+
+        // Reset scores
+        function resetScores() {
+            gameState.scores.X = 0;
+            gameState.scores.O = 0;
+            gameState.scores.tie = 0;
+            updateScores();
+            resetGame();
+        }
+
+        // Show the modal
+        function showModal() {
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 500);
+        }
+
+        // Close the modal and reset the game
+        function closeModalAndReset() {
+            modal.classList.remove('active');
+            resetGame();
+        }
+
+        // Initialize the game when the page loads
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>

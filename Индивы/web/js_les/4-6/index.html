@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Темы: Перемещение, Модалка, Кнопки</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #eef2f5;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .box {
+      background: white;
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* --- Перемещаемое окно --- */
+    #dragWindow {
+      width: 200px;
+      height: 100px;
+      background-color: #ffc;
+      border: 2px solid #999;
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      cursor: move;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    /* --- Модальное окно --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none; /* Скрыта по умолчанию */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal button.close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: red;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Три темы: Перемещение, Модалка, Кнопки</h1>
+
+  <!-- 1. Перемещение окна -->
+  <div class="box">
+    <h2>1. Перемещаемое окно</h2>
+    <p>Попробуй перетащить желтое окно мышкой.</p>
+    <div id="dragWindow">Я перемещаюсь!</div>
+  </div>
+
+  <!-- 2. Модальные диалоги -->
+  <div class="box">
+    <h2>2. Модальное окно</h2>
+    <p>Нажми на кнопку, чтобы открыть диалог.</p>
+    <button onclick="openModal()">Открыть модальное окно</button>
+  </div>
+
+  <!-- Модальное окно -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="close" onclick="closeModal()">X</button>
+      <h3>Это модальный диалог</h3>
+      <p>Ты можешь его закрыть кнопкой или кликом вне окна.</p>
+    </div>
+  </div>
+
+  <!-- 3. Кнопки -->
+  <div class="box">
+    <h2>3. Кнопки и события</h2>
+    <p>Нажимай на кнопки и смотри результат ниже:</p>
+    <button onclick="changeText('Привет!')">Сказать Привет</button>
+    <button onclick="changeText('Пока!')">Сказать Пока</button>
+    <button onclick="changeText('Ты нажал третью кнопку!')">Кнопка 3</button>
+    <p id="message" style="margin-top:10px;font-weight:bold;"></p>
+  </div>
+
+  <script>
+    // --- 1. Перемещение окна ---
+    const dragWindow = document.getElementById('dragWindow');
+    let offsetX = 0, offsetY = 0, isDragging = false;
+
+    dragWindow.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      offsetX = e.clientX - dragWindow.offsetLeft;
+      offsetY = e.clientY - dragWindow.offsetTop;
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (isDragging) {
+        dragWindow.style.left = (e.clientX - offsetX) + 'px';
+        dragWindow.style.top = (e.clientY - offsetY) + 'px';
+      }
+    });
+
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+    });
+
+    // --- 2. Модальные диалоги ---
+    const modalOverlay = document.getElementById('modalOverlay');
+
+    function openModal() {
+      modalOverlay.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modalOverlay.style.display = 'none';
+    }
+
+    // Закрытие по клику вне окна
+    modalOverlay.addEventListener('click', function(e) {
+      if (e.target === modalOverlay) {
+        closeModal();
+      }
+    });
+
+    // --- 3. Кнопки ---
+    function changeText(text) {
+      document.getElementById('message').textContent = text;
+    }
+  </script>
+
+</body>
+</html>

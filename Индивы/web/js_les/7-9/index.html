@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>DDL, TCP/UDP, Диаграмма прецедентов</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f0f4f7;
+    }
+
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    code {
+      background: #eee;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+
+    svg {
+      margin-top: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+    }
+
+    .button {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DDL -->
+  <div class="section">
+    <h2>1. Введение в DDL (язык определения данных)</h2>
+    <p><strong>DDL</strong> используется для создания и управления структурой базы данных.</p>
+
+    <p>Пример DDL на SQL:</p>
+    <pre><code>CREATE TABLE users (
+  id INT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100)
+);</code></pre>
+
+    <p>В браузере мы не можем выполнить SQL напрямую, но можем имитировать:</p>
+
+    <button class="button" onclick="simulateDDL()">Создать структуру 'таблицы'</button>
+    <pre id="ddlOutput"></pre>
+  </div>
+
+  <!-- TCP и UDP -->
+  <div class="section">
+    <h2>2. TCP и UDP — протоколы связи</h2>
+    <p><strong>TCP</strong> — надёжный, с подтверждением. <strong>UDP</strong> — быстрый, без подтверждения.</p>
+
+    <table>
+      <tr><th>Характеристика</th><th>TCP</th><th>UDP</th></tr>
+      <tr><td>Надёжность</td><td>Да</td><td>Нет</td></tr>
+      <tr><td>Скорость</td><td>Медленнее</td><td>Быстрее</td></tr>
+      <tr><td>Примеры</td><td>Веб, Email</td><td>Игры, звонки</td></tr>
+    </table>
+
+    <p>Нажми для имитации обмена по TCP:</p>
+    <button class="button" onclick="tcpSend()">Отправить (TCP)</button>
+    <button class="button" onclick="udpSend()">Отправить (UDP)</button>
+    <pre id="networkOutput"></pre>
+  </div>
+
+  <!-- Диаграмма прецедентов -->
+  <div class="section">
+    <h2>3. Диаграмма прецедентов (Use Case Diagram)</h2>
+    <p>Показывает, как пользователь взаимодействует с системой.</p>
+
+    <svg width="600" height="300">
+      <!-- Актор (пользователь) -->
+      <circle cx="80" cy="150" r="30" fill="#ddd"/>
+      <text x="55" y="160" font-size="14">User</text>
+
+      <!-- Прецеденты -->
+      <ellipse cx="300" cy="100" rx="80" ry="30" fill="#cde"/>
+      <text x="250" y="105">Login</text>
+
+      <ellipse cx="300" cy="200" rx="80" ry="30" fill="#cde"/>
+      <text x="250" y="205">View Profile</text>
+
+      <!-- Связи -->
+      <line x1="110" y1="150" x2="220" y2="100" stroke="#000" />
+      <line x1="110" y1="150" x2="220" y2="200" stroke="#000" />
+    </svg>
+  </div>
+
+  <script>
+    // --- Имитируем создание таблицы (DDL) ---
+    function simulateDDL() {
+      const tableStructure = {
+        tableName: 'users',
+        columns: [
+          { name: 'id', type: 'INT' },
+          { name: 'name', type: 'VARCHAR(100)' },
+          { name: 'email', type: 'VARCHAR(100)' }
+        ]
+      };
+
+      let output = `Создана таблица: ${tableStructure.tableName}\n`;
+      output += 'Поля:\n';
+      tableStructure.columns.forEach(col => {
+        output += `- ${col.name} : ${col.type}\n`;
+      });
+
+      document.getElementById('ddlOutput').textContent = output;
+    }
+
+    // --- TCP/UDP симуляция ---
+    function tcpSend() {
+      document.getElementById('networkOutput').textContent = 
+        'TCP: Отправка данных...\n✅ Подтверждение получено.\n📦 Данные доставлены в правильном порядке.';
+    }
+
+    function udpSend() {
+      document.getElementById('networkOutput').textContent = 
+        'UDP: Отправка данных...\n⚠️ Нет подтверждения доставки.\n📦 Некоторые данные могли потеряться.';
+    }
+  </script>
+
+</body>
+</html>
